@@ -5,6 +5,6 @@ cls
 
 cd /d "%~dp0"
 
-python tool.py
+python Alhrbi Nuker.py
 
 pause
