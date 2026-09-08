@@ -260,7 +260,7 @@ def print_logo():
     print(YELLOW + "=" * 60)
     print(YELLOW + LOGO_MAIN)
     print(YELLOW + "=" * 60)
-          print(YELLOW +    "by : MaybeRayan")
+    print(YELLOW +    "by : MaybeRayan")
     print(YELLOW + "Owner : mayberayanalhrbi")
     print(YELLOW + "=" * 60)
 
