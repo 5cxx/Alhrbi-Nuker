@@ -12,12 +12,12 @@ echo.
 echo [*] Starting...
 echo.
 
-python Alhrbi Nuker.py
+python alhrbi.py
 
 if %errorlevel% neq 0 (
     echo.
     echo [X] Error occurred! Make sure:
-    echo     1. File name is: Alhrbi Nuker.py
+    echo     1. File name is: alhrbi.py
     echo     2. All packages are installed
     echo     3. Run setup.bat first
     echo.
