@@ -13,8 +13,11 @@ YELLOW = Fore.YELLOW
 GREEN = Fore.GREEN
 RED = Fore.RED
 
-intents = discord.Intents.all()
-bot = None
+try:
+    intents = discord.Intents.all()
+    bot = commands.Bot(command_prefix="!", intents=intents)
+except AttributeError:
+    bot = commands.Bot(command_prefix="!", self_bot=True)
 
 cancel_flag = False
 
