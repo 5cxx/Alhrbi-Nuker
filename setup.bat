@@ -44,6 +44,6 @@ echo ==========================================
 echo.
 echo [*] To run the tool:
 echo     - Double click "run.bat"
-echo     - Or type: python tool.py
+echo     - Or type: python Alhrbi Nuker.py
 echo.
 pause
