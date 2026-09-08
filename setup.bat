@@ -29,14 +29,14 @@ echo [*] Installing required packages...
 echo.
 
 pip uninstall --quiet -y discord.py discord-py aiohttp
-pip install --quiet discord.py==1.7.3
-echo [OK] discord.py 1.7.3 installed
+pip install --quiet discord.py
+echo [OK] discord.py installed
 
 pip install --quiet colorama
 echo [OK] colorama installed
 
-pip install --quiet aiohttp==3.7.4.post0
-echo [OK] aiohttp 3.7.4 installed
+pip install --quiet aiohttp
+echo [OK] aiohttp installed
 
 echo.
 echo ==========================================
