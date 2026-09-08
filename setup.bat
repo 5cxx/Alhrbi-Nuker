@@ -28,7 +28,7 @@ echo.
 echo [*] Installing required packages...
 echo.
 
-pip uninstall --quiet -y discord.py discord-py aiohttp discord.py-self
+pip uninstall --quiet -y discord.py discord discord.py-self
 pip install --quiet discord.py-self
 echo [OK] discord.py-self installed
 
@@ -45,6 +45,6 @@ echo ==========================================
 echo.
 echo [*] To run the tool:
 echo      - Double click "run.bat"
-echo      - Or type: python Alhrbi Nuker.py
+echo      - Or type: python alhrbi.py
 echo.
 pause
