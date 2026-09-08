@@ -15,9 +15,8 @@ RED = Fore.RED
 
 try:
     intents = discord.Intents.all()
-    bot = commands.Bot(command_prefix="!", intents=intents)
-except AttributeError:
-    bot = commands.Bot(command_prefix="!", self_bot=True)
+except:
+    intents = None
 
 cancel_flag = False
 
@@ -595,6 +594,7 @@ async def start():
             gid = int(inp("[+] Guild ID: ").strip())
         except ValueError:
             printc("[X] Invalid Guild ID!")
+            input(YELLOW + "\n[!] Press Enter to continue...")
             continue
         
         print()
@@ -605,7 +605,13 @@ async def start():
         
         try:
             if choice == "2":
-                bot = commands.Bot(command_prefix="!", self_bot=True, intents=intents)
+                try:
+                    if intents:
+                        bot = commands.Bot(command_prefix="!", self_bot=True, intents=intents)
+                    else:
+                        bot = commands.Bot(command_prefix="!", self_bot=True)
+                except:
+                    bot = commands.Bot(command_prefix="!", self_bot=True)
                 
                 @bot.event
                 async def on_ready():
@@ -623,10 +629,17 @@ async def start():
                     break
                 except Exception as e:
                     printc(f"[X] Connection failed: {e}")
+                    input(YELLOW + "\n[!] Press Enter to try again...")
                     continue
             
             else:
-                bot = commands.Bot(command_prefix="!", intents=intents)
+                try:
+                    if intents:
+                        bot = commands.Bot(command_prefix="!", intents=intents)
+                    else:
+                        bot = commands.Bot(command_prefix="!")
+                except:
+                    bot = commands.Bot(command_prefix="!")
                 
                 @bot.event
                 async def on_ready():
@@ -644,10 +657,12 @@ async def start():
                     break
                 except Exception as e:
                     printc(f"[X] Connection failed: {e}")
+                    input(YELLOW + "\n[!] Press Enter to try again...")
                     continue
         
         except Exception as e:
             printc(f"[X] Error: {e}")
+            input(YELLOW + "\n[!] Press Enter to continue...")
             continue
 
 if __name__ == "__main__":
