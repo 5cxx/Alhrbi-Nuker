@@ -714,7 +714,7 @@ async def start():
                         printc("[X] Guild not found")
                         await bot.close()
                 try:
-                    await bot.start(token)
+                    await bot.start(token, bot=False)
                     break
                 except:
                     printc("[X] Connection failed")
