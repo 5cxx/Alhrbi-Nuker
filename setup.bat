@@ -28,8 +28,9 @@ echo.
 echo [*] Installing required packages...
 echo.
 
-pip install --quiet discord.py
-echo [OK] discord.py installed
+pip uninstall --quiet -y discord.py
+pip install --quiet discord.py==1.7.3
+echo [OK] discord.py 1.7.3 installed
 
 pip install --quiet colorama
 echo [OK] colorama installed
