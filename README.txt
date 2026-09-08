@@ -13,7 +13,7 @@ How to install:
    Or install manually:
    pip install discord.py==1.7.3
    pip install colorama
-   pip install aiohttp
+   pip install aiohttp==3.7.4.post0
 
 3. Run the tool:
    Double click run.bat
@@ -26,7 +26,7 @@ Requirements:
 - Python 3.8+
 - discord.py 1.7.3
 - colorama
-- aiohttp
+- aiohttp 3.7.4.post0
 - Windows 10/11
 
 
@@ -60,6 +60,8 @@ Notes:
 - Bot needs admin permissions
 - Press ENTER to cancel any operation
 - If user token doesn't work, get a new token from Discord
+- For user token: Must be fresh and not shared with anyone
+- If token is invalid, change password and get new token
 
 
 Owner: MaybeRayan
