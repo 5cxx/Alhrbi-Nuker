@@ -11,7 +11,7 @@ How to install:
    Just double click setup.bat
 
    Or install manually:
-   pip install discord.py
+   pip install discord.py==1.7.3
    pip install colorama
    pip install aiohttp
 
@@ -24,7 +24,7 @@ How to install:
 Requirements:
 
 - Python 3.8+
-- discord.py
+- discord.py 1.7.3
 - colorama
 - aiohttp
 - Windows 10/11
@@ -59,6 +59,7 @@ Notes:
 - Use bot token for safety
 - Bot needs admin permissions
 - Press ENTER to cancel any operation
+- If user token doesn't work, get a new token from Discord
 
 
 Owner: MaybeRayan
