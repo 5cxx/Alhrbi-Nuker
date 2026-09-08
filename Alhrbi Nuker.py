@@ -13,9 +13,10 @@ YELLOW = Fore.YELLOW
 GREEN = Fore.GREEN
 RED = Fore.RED
 
-intents = discord.Intents.all()
-bot = None
-cancel = False
+try:
+    intents = discord.Intents.all()
+except:
+    intents = None
 
 def check_cancel():
     global cancel
@@ -715,7 +716,7 @@ async def start():
                     printc(f"[X] Connection failed: {e}")
                     continue
             else:
-                bot = commands.Bot(command_prefix="!", intents=intents)
+                bot = commands.Bot(command_prefix="!", intents=intents, self_bot=True)
                 @bot.event
                 async def on_ready():
                     print_logo()
@@ -737,4 +738,8 @@ async def start():
             continue
 
 if __name__ == "__main__":
-    asyncio.run(start())
+    try:
+        asyncio.run(start())
+    except Exception as e:
+        print(RED + f"[X] Error: {e}")
+        input(YELLOW + "\n[!] Press Enter to exit...")
