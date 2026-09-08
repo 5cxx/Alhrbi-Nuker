@@ -35,6 +35,7 @@ echo [OK] discord.py 1.7.3 installed
 pip install --quiet colorama
 echo [OK] colorama installed
 
+pip uninstall --quiet -y aiohttp
 pip install --quiet aiohttp
 echo [OK] aiohttp installed
 
