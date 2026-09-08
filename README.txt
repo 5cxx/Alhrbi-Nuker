@@ -4,16 +4,19 @@
 
 How to install:
 
-1. Install Python 3.8 or higher
+1. Install Python 3.10 or 3.11
    https://python.org/downloads
+
+   NOTE: Python 3.12+ may cause issues with discord.py
+   Recommended: Python 3.10
 
 2. Run setup.bat to install required packages
    Just double click setup.bat
 
    Or install manually:
-   pip install discord.py==1.7.3
+   pip install discord.py
    pip install colorama
-   pip install aiohttp==3.7.4.post0
+   pip install aiohttp
 
 3. Run the tool:
    Double click run.bat
@@ -23,10 +26,10 @@ How to install:
 
 Requirements:
 
-- Python 3.8+
-- discord.py 1.7.3
+- Python 3.10 - 3.11 (Recommended)
+- discord.py (latest)
 - colorama
-- aiohttp 3.7.4.post0
+- aiohttp
 - Windows 10/11
 
 
@@ -62,6 +65,9 @@ Notes:
 - If user token doesn't work, get a new token from Discord
 - For user token: Must be fresh and not shared with anyone
 - If token is invalid, change password and get new token
+- If you get "ModuleNotFoundError: No module named 'cgi'":
+  * Install Python 3.10 or 3.11 instead of 3.12+
+  * Or run: pip install discord.py --upgrade
 
 
 Owner: MaybeRayan
